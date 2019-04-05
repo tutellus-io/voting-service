@@ -1,0 +1,9 @@
+{
+    "standard.enable": true,
+    "flow.enabled": false,
+    "search.exclude": {
+        "**/dist": true,
+        "**/.cache": true,
+        "**/node_modules": true,
+    },
+}
