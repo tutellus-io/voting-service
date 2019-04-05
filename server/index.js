@@ -5,6 +5,7 @@ process.on('unhandledRejection', (reason, promise) => {
   process.exit(-1)
 })
 
+const path = require('path')
 const express = require('express')
 const http = require('http')
 const helmet = require('helmet')
@@ -34,6 +35,13 @@ app.use(cookieParser())
 const server = configureGraphQL()
 
 server.applyMiddleware({ app, cors: corsConfig })
+
+app.use(express.static(path.join(__dirname, '../dist')))
+app.use(require('./routes-healthcheck'))
+app.use('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'))
+})
+
 const httpServer = http.createServer(app)
 server.installSubscriptionHandlers(httpServer)
 

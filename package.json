@@ -1,16 +1,16 @@
 {
   "name": "mbc-voting",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "server/index.js",
   "license": "MIT",
   "scripts": {
+    "start": "NODE_ENV=production node server/index.js",
     "dev": "concurrently \"npm:dev:*\"",
     "dev:front": "parcel app/index.html",
     "dev:back": "nodemon --ignore \"dist/**\" server/index.js",
     "lint": "standard",
     "build": "parcel build app/index.html",
-    "start:front": "NODE_ENV=production node front/index.js",
-    "clean:dist": "rimraf dist"
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "@mdi/font": "^3.5.95",
