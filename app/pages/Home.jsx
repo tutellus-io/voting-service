@@ -13,7 +13,7 @@ import {
 } from 'react-bulma-components'
 
 const Steps = styled.div`
-  padding: 4rem 0;
+  padding: 2rem 0;
   max-width: 400px;
   margin: 0 auto;
 `
@@ -21,14 +21,14 @@ const Step = styled(({ className, title, description, url, link }) => {
   return (
     <Media className={className}>
       <Media.Item renderAs='figure' position='left'>
-        <Image size={128} alt={title} className='step_image' src={url} />
+        <Image size={96} alt={title} className='step_image' src={url} />
       </Media.Item>
       <Media.Item>
         <Heading className='step_title'
           spaced
           renderAs='h3'
           exact
-          size={1}
+          size={2}
         >
           {title}
           {link
@@ -42,10 +42,10 @@ const Step = styled(({ className, title, description, url, link }) => {
             </Icon>
           }
         </Heading>
-        <Heading className='step_descriptioon'
+        <Heading className='step_description'
           renderAs='p'
           subtitle
-          size={3}
+          size={4}
         >
           {description}
         </Heading>
@@ -64,11 +64,14 @@ const Step = styled(({ className, title, description, url, link }) => {
       margin-left: 1.5rem;
     }
   }
+  & .step_description {
+    line-height: 2rem;
+  }
 `
 
 const MainSection = styled(({ className }) => {
   const content = {
-    title: 'Bienvenido al primer sistema de votación público y descentralizado en un Demo Day',
+    title: 'Bienvenido al primer sistema de votación público y descentralizado',
     steps: [
       {
         link: '/signup',
@@ -106,7 +109,7 @@ const MainSection = styled(({ className }) => {
           size: 'half',
           offset: 'one-quarter'
         }}>
-          <Heading className='main_title' renderAs='h2' size={1}>{content.title}</Heading>
+          <Heading className='main_title' renderAs='h2' size={2}>{content.title}</Heading>
           <Steps>
             {
               content.steps.map(step =>
@@ -132,7 +135,7 @@ const MainSection = styled(({ className }) => {
   )
 })`
   & .main_title {
-    line-height: 4rem;
+    line-height: 3.5rem;
     text-align: center;
   }
 
