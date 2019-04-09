@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Mutation } from 'react-apollo'
-import { gql } from 'apollo-boost'
+import gql from 'graphql-tag'
 import * as yup from 'yup'
 import NEM from 'nem-sdk'
 

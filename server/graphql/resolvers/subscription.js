@@ -8,7 +8,7 @@ const {
 module.exports = {
   getResults: {
     subscribe: withFilter(
-      () => pubsub.asyncIterator([TOPICS.RESULTS]),
+      () => pubsub.asyncIterator(TOPICS.RESULTS),
       (payload, { address }) => payload.getResults.address === address
     )
   }

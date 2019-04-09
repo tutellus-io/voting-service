@@ -44,7 +44,7 @@ const Header = styled(({ className }) => {
             >
               Registro
             </Navbar.Item>
-            {/* <Navbar.Item
+            <Navbar.Item
               renderAs={NavLink}
               to='/poll'
               exact
@@ -61,7 +61,7 @@ const Header = styled(({ className }) => {
               onClick={() => closeBurger()}
             >
               Resultados
-            </Navbar.Item> */}
+            </Navbar.Item>
           </Navbar.Container>
         </Navbar.Menu>
       </Container>

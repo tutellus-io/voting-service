@@ -4,11 +4,11 @@ import {
   Progress
 } from 'react-bulma-components'
 
-import Section from '../components/Section'
+import Section from './Section'
 
 const Loading = () => (
   <Section>
-    <Progress max={100} color='primary' size='small' />
+    <Progress max={100} color='info' size='medium' />
   </Section>
 )
 

@@ -7,45 +7,9 @@ const {
 } = require('../shared')
 
 const POLLS = {}
-const RESULTS = {}
 let CHAIN_MONITOR
 
-const isEquivalent = (a, b) => {
-  // Create arrays of property names
-
-  var aProps = Object.getOwnPropertyNames(a)
-  var bProps = Object.getOwnPropertyNames(b)
-
-  // If number of properties is different, objects are not equivalent
-
-  if (aProps.length !== bProps.length) {
-    return false
-  }
-
-  for (var i = 0; i < aProps.length; i++) {
-    var propName = aProps[i]
-
-    // If values of same property are not equal, objects are not equivalent
-    if (a[propName] !== b[propName]) {
-      return false
-    }
-  }
-
-  // If we made it this far, objects are considered equivalent
-  return true
-}
-
-function publishResult (poll, results) {
-  const {
-    address: {
-      value: address
-    }
-  } = poll
-
-  const {
-    options
-  } = composePollInfo(poll)
-
+function composeResult (address, options, results) {
   const {
     totalVotes,
     options: resultOptions
@@ -64,14 +28,11 @@ function publishResult (poll, results) {
   }
 }
 
-function getResultFromPoll (poll, suscriptionFn) {
-  return poll.getResults()
-    .subscribe(results => {
-      suscriptionFn(poll, results)
-    })
+async function getResultFromPoll (poll, suscriptionFn) {
+  return poll.getResults().toPromise()
 }
 
-function composePollInfo (poll) {
+function composePollInfo (poll, results) {
   const {
     address: {
       value: address
@@ -99,14 +60,9 @@ function composePollInfo (poll) {
     title,
     doe,
     description,
-    options
+    options,
+    results: composeResult(address, options, results)
   }
-}
-
-const getResult = address => RESULTS[address] || {}
-
-const addResult = (address, results) => {
-  RESULTS[address] = results
 }
 
 const getPollFromCache = address => POLLS[address] || {}
@@ -117,20 +73,6 @@ const savePollToCache = (address, poll) => {
 
 const alreadyObserved = address => POLLS.hasOwnProperty(address)
 
-const publishPollResults = (force = false) => (poll, results) => {
-  const {
-    address: {
-      value: address
-    }
-  } = poll
-
-  const resultsNow = publishResult(poll, results)
-  if (force || !isEquivalent(resultsNow, getResult(address))) {
-    addResult(address, resultsNow)
-    pubsub.publish(TOPICS.RESULTS, { 'getResults': resultsNow })
-  }
-}
-
 const observePoll = async (address) => {
   if (alreadyObserved(address)) {
     return
@@ -138,8 +80,6 @@ const observePoll = async (address) => {
 
   const pollAddress = new Address(address)
   const poll = await BroadcastedPoll.fromAddressPromise(pollAddress)
-
-  getResultFromPoll(poll, publishPollResults(false))
 
   savePollToCache(address, poll)
   monitorizeChain()
@@ -152,13 +92,18 @@ const monitorizeChain = () => {
 
   const blockchainListener = new BlockchainListener()
   blockchainListener.newBlock()
-    .subscribe(block => {
-      Object.keys(POLLS).map(address => {
+    .subscribe(async block => {
+      console.error('- New BLOCK', block.height)
+      await Promise.all(Object.keys(POLLS).map(address => {
         const cachedPoll = POLLS[address]
-        getResultFromPoll(cachedPoll, publishPollResults(false))
-      })
+        return getResultFromPoll(cachedPoll)
+          .then(results => {
+            const pollInfo = composePollInfo(cachedPoll, results)
+            pubsub.publish(TOPICS.RESULTS, { 'getResults': pollInfo.results })
+          })
+      }))
     }, err => {
-      console.error('- Nem BLOCK', err)
+      console.error('- New BLOCK', err)
     })
 
   CHAIN_MONITOR = blockchainListener
@@ -172,8 +117,12 @@ module.exports = {
       await observePoll(address)
     }
     const cached = getPollFromCache(address)
-    getResultFromPoll(cached, publishPollResults(true))
+    const results = await getResultFromPoll(cached)
 
-    return composePollInfo(cached)
+    const pollInfo = composePollInfo(cached, results)
+
+    pubsub.publish(TOPICS.RESULTS, { 'getResults': pollInfo.results })
+
+    return pollInfo
   }
 }

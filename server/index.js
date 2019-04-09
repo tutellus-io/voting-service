@@ -26,6 +26,10 @@ const corsConfig = {
   credentials: true
 }
 
+const toIndexMiddleware = (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'))
+}
+
 const app = express()
 app.use(compression())
 app.use(helmet())
@@ -33,14 +37,11 @@ app.use(cors(corsConfig))
 app.use(cookieParser())
 
 const server = configureGraphQL()
-
 server.applyMiddleware({ app, cors: corsConfig })
 
 app.use(express.static(path.join(__dirname, '../dist')))
 app.use(require('./routes-healthcheck'))
-app.use('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist/index.html'))
-})
+app.use('*', toIndexMiddleware)
 
 const httpServer = http.createServer(app)
 server.installSubscriptionHandlers(httpServer)

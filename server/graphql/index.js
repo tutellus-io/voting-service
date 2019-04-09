@@ -23,6 +23,7 @@ const typeDefs = gql`
     doe: Float
     description: String
     options: [PollOptions!]!
+    results: Result
   }
 
   type ResultOptions {
