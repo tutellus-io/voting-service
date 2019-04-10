@@ -1,25 +1,23 @@
-# Voting Service: votación sobre la blockchain de NEM
+# Voting Service: voting over the NEM blockchain
 
-Proyecto utilizado en el Demo Day del Master en Blockchain de Tutellus para
-facilitar el uso de una blockchain pública (NEM) y elegir el proyecto ganador
-entre los asistentes, de forma democrática y descentralizada
+Project used in the Tutellus Demo Day of the “Master in Blockchain” program to
+facilitate the use of a public blockchain (NEM) and select the winner projects
+between the public, in a democratic and decentralized way.
 
-## Configuración
+## Configuration
 
-Antes de arrancar el proyecto copiar `env.sample` a `.env`, lugar donde indicaremos
-todas las variables de entorno del proyecto.
+Before launching the project copy `env.sample` to `.env`, where we will indicate
+all project variables.
 
-Las variable más importantes son:
+The most important variables are:
 
-* **ORIGIN_ADDRESS_PK**: Clave privada de la cuenta de NEM desde la que se
-realizarán las transferencias
-* **MAILCHIMP_LIST**: Identificador de la lista de Mailchimp donde se añade el
-email del usuario
-* **MAILCHIMP_API_KEY**: API válida de Mailchimp
-* **POLL_ADDRESS**: Poll address que se visualiza
-* **VALID_NEM_ADDRESS_PREFIX**: Prefijo de la NEM address T o N según estemos
-trabajando con TESTnet o con MAINnet. (francamente mejorable)
+* **ORIGIN_ADDRESS_PK**: Private key of the NEM account that will make the transfers
+* **MAILCHIMP_LIST**: Mailchimp list identifier,registered users will be added
+* **MAILCHIMP_API_KEY**: Valid Mailchimp API
+* **POLL_ADDRESS**: Poll address displayed
+* **VALID_NEM_ADDRESS_PREFIX**: Prefix of the NEM address T or N. Depends on
+whether we are working with TESTnet or MAINnet. (highly improvable)
 
-En desarrollo: `npm run dev`
+In Development: `npm run dev`
 
-En producción: `npm run build && npm run start`
+In production: `npm run build && npm run start`
