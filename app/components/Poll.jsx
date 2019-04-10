@@ -169,8 +169,8 @@ export const PollVotes = styled(class extends Component {
               {description}
             </Heading>
             <Heading className='poll_votes'>
-              {results.totalVotes}
-              {results.totalVotes > 1 ? ' Votos': ' Voto'}
+              {results.totalVotes === 0 ? '--': results.totalVotes}
+              {results.totalVotes !== 1 ? ' Votos': ' Voto'}
             </Heading>
             <ul>
               <PoseGroup>
@@ -198,6 +198,7 @@ export const PollVotes = styled(class extends Component {
     font-weight: 400;
     line-height: 3rem;
     margin-bottom: 1.5rem;
+    text-align: center;
   }
   & .poll_title {
     font-size: 3rem;
@@ -271,6 +272,12 @@ const OptionCopy = styled(({ className, text, address }) => {
     position: absolute;
     right: 0.5rem;
     top: 0.5rem;
+    & .is-large {
+      padding: 1.5rem;
+      & .mdi {
+        font-size: 2rem;
+      }
+    }
   }
 `
 
@@ -338,6 +345,7 @@ export const PollBasic = styled(class extends Component {
     font-weight: 400;
     line-height: 3rem;
     margin-bottom: 1.5rem;
+    text-align: center;
   }
 `
 
