@@ -157,7 +157,7 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>Home </title>
+        <title>Home | dAPP de votación de Tutellus</title>
       </Helmet>
       <Hero color='primary' size='medium'>
         Blockchain Demo Day
