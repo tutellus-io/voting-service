@@ -13,6 +13,8 @@ const Header = styled(({ className }) => {
   const toggle = () => setActive(!active)
   const closeBurger = () => setActive(false)
 
+  const showVotingMenu = +process.env.SHOW_VOTING_MENUS === 1
+
   return (
     <Navbar className={className} active={active}>
       <Container>
@@ -44,24 +46,28 @@ const Header = styled(({ className }) => {
             >
               Registro
             </Navbar.Item>
-            <Navbar.Item
-              renderAs={NavLink}
-              to='/poll'
-              exact
-              activeClassName='active'
-              onClick={() => closeBurger()}
-            >
-              Votación
-            </Navbar.Item>
-            <Navbar.Item
-              renderAs={NavLink}
-              to='/results'
-              exact
-              activeClassName='active'
-              onClick={() => closeBurger()}
-            >
-              Resultados
-            </Navbar.Item>
+            {showVotingMenu &&
+              <>
+                <Navbar.Item
+                  renderAs={NavLink}
+                  to='/poll'
+                  exact
+                  activeClassName='active'
+                  onClick={() => closeBurger()}
+                >
+                  Votación
+                </Navbar.Item>
+                <Navbar.Item
+                  renderAs={NavLink}
+                  to='/results'
+                  exact
+                  activeClassName='active'
+                  onClick={() => closeBurger()}
+                >
+                  Resultados
+                </Navbar.Item>
+              </>
+            }
           </Navbar.Container>
         </Navbar.Menu>
       </Container>
