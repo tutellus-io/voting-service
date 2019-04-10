@@ -7,7 +7,7 @@ import PollInfo, {PollVotes} from '../components/Poll'
 const Results = () => (
   <>
     <Helmet>
-      <title>Resultados de la Votación</title>
+      <title>Resultados | dAPP de votación de Tutellus</title>
     </Helmet>
     <Hero color='primary' size='medium'>
       Resultados Demo Day

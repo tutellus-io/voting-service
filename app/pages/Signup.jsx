@@ -39,7 +39,7 @@ const SignupForm = styled(({ className }) =>
 const Signup = () => (
   <>
     <Helmet>
-      <title>Registro </title>
+      <title>Registro | dAPP de votación de Tutellus</title>
     </Helmet>
     <Hero color='primary' size='medium'>
       Registro

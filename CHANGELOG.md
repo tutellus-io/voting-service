@@ -1,3 +1,8 @@
+### 0.2.1 (2019-04-10)
+- feat(README) minimum project documentation (9a5dc75)
+- feat(seo) adding some tags to be seo friendly (2d20e9c)
+- perf(links) adding rel='noopener' (2d554ee)
+
 ### 0.2.0 (2019-04-10)
 - refactor(poll) enlarge copy icons, centered description (d09853c)
 - feat(menu) hide/show menus with env variable (72e4574)

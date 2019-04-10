@@ -127,7 +127,7 @@ const MainSection = styled(({ className }) => {
             {
               content.apps.map(app =>
                 <Columns.Column>
-                  <a href={app.url} target='_blank'>
+                  <a href={app.url} target='_blank' rel='noopener'>
                     <Image className='app_image' src={app.image} />
                   </a>
                 </Columns.Column>
@@ -157,7 +157,7 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>Home </title>
+        <title>Home | dAPP de votación de Tutellus</title>
       </Helmet>
       <Hero color='primary' size='medium'>
         Blockchain Demo Day
