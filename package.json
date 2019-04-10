@@ -1,6 +1,6 @@
 {
   "name": "mbc-voting",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "main": "server/index.js",
   "license": "MIT",
   "scripts": {
