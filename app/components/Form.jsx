@@ -108,7 +108,7 @@ const BasicForm = styled(({ className, success, onChange, onSubmit, errors, valu
       <Form.Field>
         <Form.Control className='form-checkbox'>
           <Form.Checkbox name='termsAccepted' onChange={onChange} checked={values.termsAccepted}>
-            Acepto los <a href='#' target='_blank'>Términos y condiciones</a>
+            Acepto los <a href='https://www.tutellus.com/informacion/terminos-y-condiciones' target='_blank' rel='noopener'>Términos y condiciones</a>
           </Form.Checkbox>
         </Form.Control>
         {errors.termsAccepted && <Form.Help color='danger'>{errors.termsAccepted}</Form.Help>}
