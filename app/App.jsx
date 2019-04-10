@@ -4,22 +4,22 @@ import importComponent from 'react-imported-component';
 
 import Header from './components/Header'
 import Home from './pages/Home'
-import LoadingComponent from './pages/Loading'
-import ErrorComponent from './pages/Error'
+import Loading from './components/Loading'
+import Error from './components/Error'
 
 const Signup = importComponent(() => import('./pages/Signup'), {
-  LoadingComponent,
-  ErrorComponent
+  Loading,
+  Error
 });
 
 const Poll = importComponent(() => import('./pages/Poll'), {
-  LoadingComponent,
-  ErrorComponent
+  Loading,
+  Error
 });
 
 const Results = importComponent(() => import('./pages/Results'), {
-  LoadingComponent,
-  ErrorComponent
+  Loading,
+  Error
 });
 
 const App = () => (

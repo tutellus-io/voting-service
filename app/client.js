@@ -10,16 +10,15 @@ import 'core-js/es6/map'
 
 import 'react-bulma-components/dist/react-bulma-components.min.css'
 import '@mdi/font/css/materialdesignicons.min.css'
-import ApolloClient from 'apollo-boost'
+
 import { ApolloProvider } from 'react-apollo'
 
 import App from './App'
+import getClient from './apolloClient'
 import { GlobalStyles } from './styles'
 
-const client = new ApolloClient({ uri: process.env.GRAPHQL_URL })
-
 const app = (
-  <ApolloProvider client={client} >
+  <ApolloProvider client={getClient()} >
     <HelmetProvider>
       <BrowserRouter>
         <>

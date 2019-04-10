@@ -2,19 +2,17 @@ import React from 'react'
 import Helmet from 'react-helmet-async'
 
 import Hero from '../components/Hero'
-import Section from '../components/Section'
+import PollInfo, {PollVotes} from '../components/Poll'
 
 const Results = () => (
   <>
     <Helmet>
-      <title>Results Page</title>
+      <title>Resultados de la Votación</title>
     </Helmet>
     <Hero color='primary' size='medium'>
-      Results Pages
+      Resultados Demo Day
     </Hero>
-    <Section>
-      Results
-    </Section>
+    <PollInfo renderAs={PollVotes} />
   </>
 )
 

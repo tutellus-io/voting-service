@@ -17,7 +17,7 @@ const Steps = styled.div`
   max-width: 400px;
   margin: 0 auto;
 `
-const Step = styled(({ className, title, description, url, link }) => {
+const Step = styled(({ className, title, description, url, link, show }) => {
   return (
     <Media className={className}>
       <Media.Item renderAs='figure' position='left'>
@@ -31,7 +31,7 @@ const Step = styled(({ className, title, description, url, link }) => {
           size={2}
         >
           {title}
-          {link
+          {show
             ? <NavLink to={link} exact>
               <Icon color='info'>
                 <span class='mdi mdi-16px mdi-open-in-new' />
@@ -77,17 +77,22 @@ const MainSection = styled(({ className }) => {
         link: '/signup',
         url: '//placehold.jp/70/24a9bd/ffffff/180x180.jpg?text=1',
         title: 'Registro',
-        description: 'Déjanos tu email y NEM address para enviarte XEM y que puedas votar'
+        description: 'Déjanos tu email y NEM address para enviarte XEM y que puedas votar',
+        show: true
       },
       {
+        link: '/poll',
         url: '//placehold.jp/70/24a9bd/ffffff/180x180.jpg?text=2',
         title: 'Votación',
-        description: 'Elige el proyecto que más te haya gustado. Solo puedes votar 1 vez'
+        description: 'Elige el proyecto que más te haya gustado. Solo puedes votar 1 vez',
+        show: +process.env.SHOW_VOTING_MENUS === 1
       },
       {
+        link: '/results',
         url: '//placehold.jp/70/24a9bd/ffffff/180x180.jpg?text=3',
         title: 'Resultados',
-        description: 'La info de la votación quedará almacenada en la Blockchain de NEM'
+        description: 'La info de la votación quedará almacenada en la Blockchain de NEM',
+        show: +process.env.SHOW_VOTING_MENUS === 1
       }
     ],
     footer: 'Necesitas el nanowallet para votar',
