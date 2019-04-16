@@ -1,3 +1,7 @@
+### 0.2.2 (2019-04-16)
+- feat(poll) decoupled the voting options address display, from the results (9db917c)
+- feat(README) translated (a20ade6)
+
 ### 0.2.1 (2019-04-10)
 - feat(README) minimum project documentation (9a5dc75)
 - feat(seo) adding some tags to be seo friendly (2d20e9c)
