@@ -43,6 +43,21 @@ const GET_POLL_QUERY = gql`
         text
         address
       }
+    }
+  }
+`
+
+const GET_POLL_WITH_RESULTS_QUERY = gql`
+  query GET_POLL_WITH_RESULTS_QUERY($address: ID! ){
+    getPollWithResults(address: $address){
+      address
+      title
+      doe
+      description
+      options {
+        text
+        address
+      }
       results {
         address
         totalVotes
@@ -52,6 +67,22 @@ const GET_POLL_QUERY = gql`
         }
       }
     }
+  }
+`
+
+const pollStyle = `
+  & .poll_title {
+    font-size: 3rem;
+    line-height: 4rem;
+    text-align: center;
+  }
+
+  & .poll_description {
+    font-size: 1.8rem;
+    font-weight: 400;
+    line-height: 3rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
   }
 `
 
@@ -133,7 +164,7 @@ export const PollVotes = styled(class extends Component {
     if (error) return <Error />;
 
     const {
-      getPoll: {
+      getPollWithResults: {
         title,
         description,
         options,
@@ -187,24 +218,8 @@ export const PollVotes = styled(class extends Component {
     )
   }
 })`
-  & .poll_title {
-    font-size: 3rem;
-    line-height: 4rem;
-    text-align: center;
-  }
+  ${ pollStyle }
 
-  & .poll_description {
-    font-size: 1.8rem;
-    font-weight: 400;
-    line-height: 3rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
-  }
-  & .poll_title {
-    font-size: 3rem;
-    line-height: 4rem;
-    text-align: center;
-  }
   & .poll_votes {
     text-align: right;
   }
@@ -281,80 +296,57 @@ const OptionCopy = styled(({ className, text, address }) => {
   }
 `
 
-export const PollBasic = styled(class extends Component {
-  componentDidMount() {
-    this.props.more();
-  }
-  render() {
-    const {
-      data,
-      error,
-      loading
-    } = this.props
+export const PollBasic = styled(({className, data, error, loading}) => {
+  if (loading) return <Loading />;
+  if (error) return <Error />;
 
-    if (loading) return <Loading />;
-    if (error) return <Error />;
+  const {
+    getPoll: {
+      title,
+      description,
+      options
+    }
+  } = data
 
-    const {
-      getPoll: {
-        title,
-        description,
-        options
-      }
-    } = data
-
-    return (
-      <Section className={this.props.className}>
-        <Columns breakpoint='mobile'>
-          <Columns.Column tablet={{
-            size: 'half',
-            offset: 'one-quarter'
-          }}>
-            <Heading className='poll_title'
-              renderAs='h2'
-            >
-              {title}
-            </Heading>
-            <Heading className='poll_description'
-              renderAs='p'
-              size={4}
-            >
-              {description}
-            </Heading>
-            <ul>
-              {options.map(({ text, address }) => (
-                <li key={address}>
-                  <OptionCopy text={text} address={address} />
-                </li>
-              ))}
-            </ul>
-          </Columns.Column>
-        </Columns>
-      </Section>
-    )
-  }
+  return (
+    <Section className={className}>
+      <Columns breakpoint='mobile'>
+        <Columns.Column tablet={{
+          size: 'half',
+          offset: 'one-quarter'
+        }}>
+          <Heading className='poll_title'
+            renderAs='h2'
+          >
+            {title}
+          </Heading>
+          <Heading className='poll_description'
+            renderAs='p'
+            size={4}
+          >
+            {description}
+          </Heading>
+          <ul>
+            {options.map(({ text, address }) => (
+              <li key={address}>
+                <OptionCopy text={text} address={address} />
+              </li>
+            ))}
+          </ul>
+        </Columns.Column>
+      </Columns>
+    </Section>
+  )
 })`
-  & .poll_title {
-    font-size: 3rem;
-    line-height: 4rem;
-    text-align: center;
-  }
-
-  & .poll_description {
-    font-size: 1.8rem;
-    font-weight: 400;
-    line-height: 3rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
-  }
+  ${ pollStyle }
 `
 
-const PollInfo = ({
+export const ResultsPoll = ({
   address = process.env.POLL_ADDRESS,
-  renderAs:RenderAs = PollBasic
+  renderAs:RenderAs = PollVotes
 }) =>
   <Query
-    query={GET_POLL_QUERY}
+    query={GET_POLL_WITH_RESULTS_QUERY}
     variables={{ address }}
   >
     {({ subscribeToMore, ...props }) => {
@@ -377,5 +369,17 @@ const PollInfo = ({
     }}
   </Query>
 
+
+const PollInfo = ({
+  address = process.env.POLL_ADDRESS,
+}) =>
+  <Query
+    query={GET_POLL_QUERY}
+    variables={{ address }}
+  >
+    {props => {
+      return <PollBasic {...props} />
+    }}
+  </Query>
 
 export default PollInfo

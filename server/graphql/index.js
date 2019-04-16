@@ -39,6 +39,7 @@ const typeDefs = gql`
 
   type Query {
     getPoll(address: ID!): Poll
+    getPollWithResults(address: ID!): Poll
   }
   type Subscription {
     getResults(address: ID!): Result

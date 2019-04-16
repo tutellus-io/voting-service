@@ -55,14 +55,19 @@ function composePollInfo (poll, results) {
     }
   })
 
-  return {
+  const pollInfo = {
     address,
     title,
     doe,
     description,
-    options,
-    results: composeResult(address, options, results)
+    options
   }
+
+  if (results) {
+    pollInfo.results = composeResult(address, options, results)
+  }
+
+  return pollInfo
 }
 
 const getPollFromCache = address => POLLS[address] || {}
@@ -110,9 +115,15 @@ const monitorizeChain = () => {
 }
 
 module.exports = {
-  observePoll,
+  getPoll: async (address) => {
+    if (!alreadyObserved(address)) {
+      await observePoll(address)
+    }
+    const cached = getPollFromCache(address)
+    return composePollInfo(cached)
+  },
 
-  getPollInfo: async (address) => {
+  getPollWithResults: async (address) => {
     if (!alreadyObserved(address)) {
       await observePoll(address)
     }
