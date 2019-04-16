@@ -2,7 +2,7 @@ import React from 'react'
 import Helmet from 'react-helmet-async'
 
 import Hero from '../components/Hero'
-import PollInfo, {PollVotes} from '../components/Poll'
+import {ResultsPoll} from '../components/Poll'
 
 const Results = () => (
   <>
@@ -12,7 +12,7 @@ const Results = () => (
     <Hero color='primary' size='medium'>
       Resultados Demo Day
     </Hero>
-    <PollInfo renderAs={PollVotes} />
+    <ResultsPoll />
   </>
 )
 
